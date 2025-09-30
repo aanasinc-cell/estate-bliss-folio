@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tatler Estate Agents | Find Your Home in Worcestershire</title>
+    <meta name="description" content="Award-winning estate & letting agents in Worcestershire. Building trusted relationships. Find properties for sale and to rent with expert local knowledge.">
+    <meta name="author" content="Tatler Estate Agents">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Tatler Estate Agents | Find Your Home in Worcestershire">
+    <meta property="og:description" content="Award-winning estate & letting agents in Worcestershire. Building trusted relationships.">
+    <meta property="og:type" content="website">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /*
+        Tatler Estate Agents Color Palette:
+        Deep navy: #002153 - hsl(211, 100%, 16%)
+        Accent navy: #26426C - hsl(216, 46%, 29%)
+        Warm cream: #F6F4F1 - hsl(30, 14%, 96%)
+        White: #FFFFFF - hsl(0, 0%, 100%)
+        Gold accent: #C8A05A - hsl(38, 48%, 57%)
+        */
+        
+        :root {
+            /* Color Palette */
+            --navy-deep: #002153;
+            --navy-accent: #26426C;
+            --cream: #F6F4F1;
+            --white: #FFFFFF;
+            --gold: #C8A05A;
+            --text-muted: #6B7280;
+            --border-light: #E5E7EB;
+            
+            /* Typography */
+            --font-serif: 'Playfair Display', Georgia, serif;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            
+            /* Shadows */
+            --shadow-card: 0 2px 12px rgba(0, 33, 83, 0.08);
+            --shadow-card-hover: 0 8px 24px rgba(0, 33, 83, 0.12);
+            --shadow-hero-card: 0 4px 24px rgba(0, 33, 83, 0.15);
+            
+            /* Transitions */
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            color: var(--navy-deep);
+            background-color: var(--cream);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-serif);
+            font-weight: 600;
+            line-height: 1.2;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        /* Header Styles */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            transition: var(--transition-smooth);
+            background: rgba(0, 33, 83, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header.scrolled {
+            background: rgba(0, 33, 83, 0.95);
+            box-shadow: var(--shadow-card);
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 4rem;
+        }
+        
+        .logo {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+        }
+        
+        .nav-desktop {
+            display: none;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .nav-desktop a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+        }
+        
+        .nav-desktop a:hover {
+            color: var(--gold);
+        }
+        
+        .header-actions {
+            display: none;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: 2px solid transparent;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            background: none;
+        }
+        
+        .btn-outline-white {
+            border-color: var(--white);
+            color: var(--white);
+            background: transparent;
+        }
+        
+        .btn-outline-white:hover {
+            background: var(--white);
+            color: var(--navy-deep);
+        }
+        
+        .btn-gold {
+            background: var(--gold);
+            color: var(--navy-deep);
+            border-color: var(--gold);
+        }
+        
+        .btn-gold:hover {
+            background: transparent;
+            color: var(--gold);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-card);
+        }
+        
+        .btn-navy {
+            background: var(--navy-deep);
+            color: var(--white);
+            border-color: var(--navy-deep);
+        }
+        
+        .btn-navy:hover {
+            background: var(--navy-accent);
+        }
+        
+        .btn-lg {
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+        }
+        
+        .mobile-menu-btn {
+            display: block;
+            color: var(--white);
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .mobile-menu {
+            display: none;
+            padding: 1rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+        
+        .mobile-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .mobile-nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+        }
+        
+        .mobile-nav a:hover {
+            color: var(--gold);
+        }
+        
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(rgba(0, 33, 83, 0.6), rgba(38, 66, 108, 0.5), rgba(0, 33, 83, 0.7)), url('https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1926&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+        }
+        
+        .hero-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            letter-spacing: 0.05em;
+            font-weight: 300;
+        }
+        
+        .hero-title {
+            font-family: var(--font-serif);
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+        
+        .hero-description {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+        }
+        
+        .search-card {
+            background: var(--white);
+            border-radius: 0.5rem;
+            padding: 2rem;
+            box-shadow: var(--shadow-hero-card);
+            max-width: 48rem;
+            margin: 0 auto;
+        }
+        
+        .search-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .search-input-wrapper {
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            height: 3rem;
+            padding: 0 1rem 0 1rem;
+            border: 1px solid var(--border-light);
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition-smooth);
+        }
+        
+        .search-input:focus {
+            border-color: var(--navy-deep);
+            box-shadow: 0 0 0 3px rgba(0, 33, 83, 0.1);
+        }
+        
+        .search-btn {
+            position: absolute;
+            right: 0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 2rem;
+            height: 2rem;
+            background: var(--navy-deep);
+            color: var(--white);
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+        
+        .search-btn:hover {
+            background: var(--navy-accent);
+        }
+        
+        .search-toggles {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+        
+        .toggle-btn {
+            flex: 1;
+            max-width: 150px;
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--border-light);
+            background: var(--white);
+            color: var(--navy-deep);
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            font-weight: 600;
+        }
+        
+        .toggle-btn.active {
+            background: var(--navy-deep);
+            color: var(--white);
+            border-color: var(--navy-deep);
+        }
+        
+        /* Section Styles */
+        .section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--navy-deep);
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+        
+        /* Valuation Band */
+        .valuation-band {
+            text-align: center;
+        }
+        
+        /* Feature Tiles */
+        .tiles-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+        
+        .tile {
+            position: relative;
+            height: 20rem;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            transition: var(--transition-smooth);
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .tile:hover {
+            box-shadow: var(--shadow-card-hover);
+            transform: translateY(-2px);
+        }
+        
+        .tile-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            transition: var(--transition-smooth);
+        }
+        
+        .tile:hover .tile-bg {
+            transform: scale(1.05);
+        }
+        
+        .tile-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 33, 83, 0.9), rgba(0, 33, 83, 0.4), transparent);
+        }
+        
+        .tile-content {
+            position: absolute;
+            inset: 0;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+        }
+        
+        .tile-title {
+            font-family: var(--font-serif);
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+        
+        .tile-arrow {
+            opacity: 0;
+            transition: var(--transition-smooth);
+            color: var(--white);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .tile:hover .tile-arrow {
+            opacity: 1;
+        }
+        
+        /* Property Cards */
+        .properties-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+        
+        .property-card {
+            background: var(--white);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            transition: var(--transition-smooth);
+        }
+        
+        .property-card:hover {
+            box-shadow: var(--shadow-card-hover);
+            transform: translateY(-2px);
+        }
+        
+        .property-image {
+            position: relative;
+            height: 12rem;
+            overflow: hidden;
+        }
+        
+        .property-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-smooth);
+        }
+        
+        .property-card:hover .property-image img {
+            transform: scale(1.05);
+        }
+        
+        .property-details {
+            padding: 1.25rem;
+        }
+        
+        .property-price {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--navy-deep);
+            margin-bottom: 0.5rem;
+        }
+        
+        .property-address {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        
+        .property-features {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+        
+        .property-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .property-description {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+        
+        /* Contact Band */
+        .contact-band {
+            text-align: center;
+        }
+        
+        .contact-card {
+            background: var(--white);
+            border-radius: 0.5rem;
+            padding: 3rem 2rem;
+            box-shadow: var(--shadow-card);
+            max-width: 48rem;
+            margin: 0 auto;
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--navy-deep);
+            color: var(--white);
+            padding: 3rem 0 1.5rem;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-section h3 {
+            font-family: var(--font-serif);
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section ul li a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: var(--transition-smooth);
+        }
+        
+        .footer-section ul li a:hover {
+            color: var(--gold);
+        }
+        
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-social a {
+            color: rgba(255, 255, 255, 0.8);
+            transition: var(--transition-smooth);
+        }
+        
+        .footer-social a:hover {
+            color: var(--gold);
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .footer-brand {
+            width: 3rem;
+            height: 3rem;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-serif);
+            font-size: 1.125rem;
+            font-weight: 700;
+        }
+        
+        /* Responsive Design */
+        @media (min-width: 640px) {
+            .search-toggles {
+                flex-direction: row;
+            }
+            
+            .toggle-btn {
+                flex: 0 0 auto;
+            }
+            
+            .properties-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .tiles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .nav-desktop {
+                display: flex;
+            }
+            
+            .header-actions {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: none;
+            }
+            
+            .hero-title {
+                font-size: 5rem;
+            }
+            
+            .footer-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .footer-bottom {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .container {
+                padding: 0 2rem;
+            }
+            
+            .hero-title {
+                font-size: 6rem;
+            }
+            
+            .properties-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        /* Utility Classes */
+        .hidden {
+            display: none;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        /* Icons (simple SVG) */
+        .icon {
+            width: 1rem;
+            height: 1rem;
+            display: inline-block;
+            fill: currentColor;
+        }
+        
+        .icon-lg {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">TATLER</a>
+                
+                <nav class="nav-desktop">
+                    <a href="#home">FIND YOUR HOME</a>
+                    <a href="#services">OUR SERVICES ▾</a>
+                    <a href="#about">ABOUT US ▾</a>
+                </nav>
+                
+                <div class="header-actions">
+                    <button class="btn btn-outline-white">BOOK A VALUATION</button>
+                    <button class="btn btn-outline-white">CONTACT US</button>
+                </div>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                    <svg class="icon icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="4" x2="20" y1="6" y2="6"/>
+                        <line x1="4" x2="20" y1="12" y2="12"/>
+                        <line x1="4" x2="20" y1="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="mobile-menu" id="mobileMenu">
+                <nav class="mobile-nav">
+                    <a href="#home">FIND YOUR HOME</a>
+                    <a href="#services">OUR SERVICES</a>
+                    <a href="#about">ABOUT US</a>
+                    <button class="btn btn-gold" style="width: 100%; margin-top: 1rem;">BOOK A VALUATION</button>
+                    <button class="btn btn-outline-white" style="width: 100%;">CONTACT US</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <p class="hero-subtitle">Building Trusted Relationships</p>
+                    <h1 class="hero-title">Find your home</h1>
+                    <p class="hero-description">
+                        Multi-award winning estate & letting agents across Worcestershire<br>
+                        We are an independent local family firm
+                    </p>
+                    
+                    <div class="search-card">
+                        <form class="search-form" id="searchForm">
+                            <div class="search-input-wrapper">
+                                <input 
+                                    type="text" 
+                                    class="search-input" 
+                                    placeholder="City, town or postcode…"
+                                    id="searchInput"
+                                    required
+                                    aria-label="Search location"
+                                >
+                                <button type="submit" class="search-btn" aria-label="Search">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="11" cy="11" r="8"/>
+                                        <path d="m21 21-4.35-4.35"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <div class="search-toggles">
+                                <button type="button" class="toggle-btn active" id="saleBtn">FOR SALE</button>
+                                <button type="button" class="toggle-btn" id="rentBtn">TO RENT</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Valuation Band -->
+        <section class="section valuation-band">
+            <div class="container">
+                <h2 class="section-title">Wondering how much your home is worth?</h2>
+                <p class="section-subtitle">Find the value of the Worcestershire sold by Karl Tatler Estate Agents</p>
+                <button class="btn btn-gold btn-lg">BOOK A VALUATION</button>
+            </div>
+        </section>
+
+        <!-- Feature Tiles -->
+        <section class="section" id="services">
+            <div class="container">
+                <div class="tiles-grid">
+                    <a href="#" class="tile">
+                        <div class="tile-bg" style="background-image: url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                        <div class="tile-overlay"></div>
+                        <div class="tile-content">
+                            <h3 class="tile-title">Why sell with us?</h3>
+                            <div class="tile-arrow">Learn more →</div>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="tile">
+                        <div class="tile-bg" style="background-image: url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                        <div class="tile-overlay"></div>
+                        <div class="tile-content">
+                            <h3 class="tile-title">Why let with us?</h3>
+                            <div class="tile-arrow">Learn more →</div>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="tile">
+                        <div class="tile-bg" style="background-image: url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                        <div class="tile-overlay"></div>
+                        <div class="tile-content">
+                            <h3 class="tile-title">Mortgage & Insurance Services</h3>
+                            <div class="tile-arrow">Learn more →</div>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="tile">
+                        <div class="tile-bg" style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                        <div class="tile-overlay"></div>
+                        <div class="tile-content">
+                            <h3 class="tile-title">Careers</h3>
+                            <div class="tile-arrow">Learn more →</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- New to Market -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">New to market</h2>
+                
+                <div class="properties-grid">
+                    <article class="property-card">
+                        <div class="property-image">
+                            <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Property at Oak Drive Close" loading="lazy">
+                        </div>
+                        <div class="property-details">
+                            <h3 class="property-price">£700,000</h3>
+                            <div class="property-address">
+                                Oak Drive Close<br>
+                                Wirral · CH 42 2W
+                            </div>
+                            <div class="property-features">
+                                <div class="property-feature">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M2 20v-8a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2Z"/>
+                                        <path d="M6 12v4"/>
+                                        <path d="M10 12v4"/>
+                                        <path d="M14 12v4"/>
+                                    </svg>
+                                    <span>4</span>
+                                </div>
+                                <div class="property-feature">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.683 3 4 3.683 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/>
+                                        <line x1="10" x2="8" y1="5" y2="7"/>
+                                        <line x1="2" x2="22" y1="12" y2="12"/>
+                                        <line x1="7" x2="7" y1="19" y2="21"/>
+                                        <line x1="17" x2="17" y1="19" y2="21"/>
+                                    </svg>
+                                    <span>3</span>
+                                </div>
+                                <div class="property-feature">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                                        <polyline points="10,17 15,12 10,7"/>
+                                        <line x1="15" x2="3" y1="12" y2="12"/>
+                                    </svg>
+                                    <span>2,400 sq ft</span>
+                                </div>
+                            </div>
+                            <p class="property-description">
+                                A beautiful 4 bedroom detached home in a desirable location, featuring a spacious living area, modern kitchen, and beautifully landscaped gardens.
+                            </p>
+                        </div>
+                    </article>
+                    
+                    <article class="property-card">
+                        <div class="property-image">
+                            <img src="https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Property at Babergh Drive Walmer" loading="lazy">
+                        </div>
+                        <div class="property-details">
+                            <h3 class="property-price">£375,000</h3>
+                            <div class="property-address">
+                                Babergh Drive Walmer<br>
+                                Wirral · CH 60 EC
+                            </div>
+                            <div class="property-features">
+                                <div class="property-feature">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M2 20v-8a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2Z"/>
+                                        <path d="M6 12v4"/>
+                                        <path d="M10 12v4"/>
+                                        <path d="M14 12v4"/>
+                                    </svg>
+                                    <span>3</span>
+                                </div>
+                                <div class="property-feature">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.683 3 4 3.683 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/>
+                                        <line x1="10" x2="8" y1="5" y2="7"/>
+                                        <line x1="2" x2="22" y1="12" y2="12"/>
+                                        <line x1="7" x2="7" y1="19" y2="21"/>
+                                        <line x1="17" x2="17" y1="19" y2="21"/>
+                                    </svg>
+                                    <span>2</span>
+                                </div>
+                                <div class="property-feature">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                                        <polyline points="10,17 15,12 10,7"/>
+                                        <line x1="15" x2="3" y1="12" y2="12"/>
+                                    </svg>
+                                    <span>1,850 sq ft</span>
+                                </div>
+                            </div>
+                            <p class="property-description">
+                                A lovely 3 bedroom property in a prime residential area, well-maintained throughout with spacious rooms and generous garden.
+                            </p>
+                        </div>
+                    </article>
+                    
+                    <article class="property-card">
+                        <div class="property-image">
+                            <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Property at Lister Lane" loading="lazy">
+                        </div>
+                        <div class="property-details">
+                            <h3 class="property-price">£900 pcm</h3>
+                            <div class="property-address">
+                                Lister Lane<br>
+                                Aintree, Wirral · CH 23 0J
+                            </div>
+                            <div class="property-features">
+                                <div class="property-feature">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M2 20v-8a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2Z"/>
+                                        <path d="M6 12v4"/>
+                                        <path d="M10 12v4"/>
+                                        <path d="M14 12v4"/>
+                                    </svg>
+                                    <span>3</span>
+                                </div>
+                                <div class="property-feature">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.683 3 4 3.683 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/>
+                                        <line x1="10" x2="8" y1="5" y2="7"/>
+                                        <line x1="2" x2="22" y1="12" y2="12"/>
+                                        <line x1="7" x2="7" y1="19" y2="21"/>
+                                        <line x1="17" x2="17" y1="19" y2="21"/>
+                                    </svg>
+                                    <span>1</span>
+                                </div>
+                                <div class="property-feature">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                                        <polyline points="10,17 15,12 10,7"/>
+                                        <line x1="15" x2="3" y1="12" y2="12"/>
+                                    </svg>
+                                    <span>1,200 sq ft</span>
+                                </div>
+                            </div>
+                            <p class="property-description">
+                                A wonderful 3 bedroom terraced home ideal for families, close to local amenities, shops and schools.
+                            </p>
+                        </div>
+                    </article>
+                </div>
+                
+                <div class="text-center" style="margin-top: 2.5rem;">
+                    <button class="btn btn-navy btn-lg">VIEW MOST RECENT</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Band -->
+        <section class="section contact-band">
+            <div class="container">
+                <div class="contact-card">
+                    <h2 class="section-title">Need to get in touch?</h2>
+                    <p class="section-subtitle" style="margin-bottom: 2rem;">
+                        Click here to contact us, or call us directly. Search what we can help you simply
+                    </p>
+                    <button class="btn btn-gold btn-lg">CONTACT US</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" id="about">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>About us</h3>
+                    <ul>
+                        <li><a href="#">Our history</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">News</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><a href="#">Contact us</a></li>
+                        <li><a href="#">Offices & team member</a></li>
+                        <li><a href="#">Request a valuation</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Help</h3>
+                    <ul>
+                        <li><a href="#">Saved properties</a></li>
+                        <li><a href="#">Manage enquiry</a></li>
+                        <li><a href="#">Tenants' Rights</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Terms & conditions</a></li>
+                        <li><a href="#">Complaints procedure</a></li>
+                        <li><a href="#">Privacy policy</a></li>
+                        <li><a href="#">Accessibility</a></li>
+                        <li><a href="#">Cookies</a></li>
+                        <li><a href="#">Letting fees</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-social">
+                <a href="#" aria-label="Facebook">
+                    <svg class="icon icon-lg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                </a>
+                <a href="#" aria-label="Twitter">
+                    <svg class="icon icon-lg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                    </svg>
+                </a>
+                <a href="#" aria-label="Instagram">
+                    <svg class="icon icon-lg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987s11.987-5.367 11.987-11.987C24.014 5.367 18.648.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.563-3.239-1.441-.666-.739-1.074-1.717-1.074-2.797 0-2.342 1.899-4.24 4.24-4.24s4.24 1.898 4.24 4.24c0 2.342-1.898 4.238-4.24 4.238h.073zm7.598 0c-1.297 0-2.449-.563-3.24-1.441-.666-.739-1.073-1.717-1.073-2.797 0-2.342 1.898-4.24 4.24-4.24 2.341 0 4.239 1.898 4.239 4.24 0 2.342-1.898 4.238-4.239 4.238h.073z"/>
+                    </svg>
+                </a>
+                <a href="#" aria-label="LinkedIn">
+                    <svg class="icon icon-lg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                </a>
+                <a href="#" aria-label="YouTube">
+                    <svg class="icon icon-lg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                </a>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>
+                    © 2025 Karl Tatler Estate Agents & Lettings. All Rights Reserved.<br>
+                    Crafted by ADCREATIVE
+                </p>
+                <div class="footer-brand">KT</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            const isOpen = mobileMenu.classList.contains('active');
+            mobileMenu.classList.toggle('active');
+            
+            // Update aria-expanded attribute
+            mobileMenuBtn.setAttribute('aria-expanded', !isOpen);
+        });
+
+        // Header scroll effect
+        const header = document.getElementById('header');
+        
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 20) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Search form handling
+        const searchForm = document.getElementById('searchForm');
+        const searchInput = document.getElementById('searchInput');
+        const saleBtn = document.getElementById('saleBtn');
+        const rentBtn = document.getElementById('rentBtn');
+        let searchType = 'sale';
+
+        // Toggle buttons
+        saleBtn.addEventListener('click', function() {
+            searchType = 'sale';
+            saleBtn.classList.add('active');
+            rentBtn.classList.remove('active');
+        });
+
+        rentBtn.addEventListener('click', function() {
+            searchType = 'rent';
+            rentBtn.classList.add('active');
+            saleBtn.classList.remove('active');
+        });
+
+        // Search form submission
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const query = searchInput.value.trim();
+            if (!query) {
+                alert('Please enter a location to search');
+                return;
+            }
+            
+            // Simple validation
+            if (query.length > 100) {
+                alert('Search query too long. Please enter a shorter location.');
+                return;
+            }
+            
+            // Show result (in a real app, this would make an API call)
+            alert(`Searching for properties ${searchType === 'sale' ? 'for sale' : 'to rent'} in: ${query}`);
+            console.log(`Search: ${query}, Type: ${searchType}`);
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    const headerHeight = header.offsetHeight;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Lazy loading images (modern browsers)
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src || img.src;
+                        img.classList.remove('lazy');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+
+            document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+
+        // Simple property image lightbox
+        document.querySelectorAll('.property-image img').forEach(img => {
+            img.addEventListener('click', function() {
+                const lightbox = document.createElement('div');
+                lightbox.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.9);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 1000;
+                    cursor: pointer;
+                `;
+                
+                const lightboxImg = document.createElement('img');
+                lightboxImg.src = this.src;
+                lightboxImg.alt = this.alt;
+                lightboxImg.style.cssText = `
+                    max-width: 90%;
+                    max-height: 90%;
+                    object-fit: contain;
+                `;
+                
+                lightbox.appendChild(lightboxImg);
+                document.body.appendChild(lightbox);
+                
+                // Close on click
+                lightbox.addEventListener('click', function() {
+                    document.body.removeChild(lightbox);
+                });
+                
+                // Close on escape key
+                const handleEscape = function(e) {
+                    if (e.key === 'Escape') {
+                        document.body.removeChild(lightbox);
+                        document.removeEventListener('keydown', handleEscape);
+                    }
+                };
+                document.addEventListener('keydown', handleEscape);
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                mobileMenu.classList.remove('active');
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Form validation utility
+        function validateInput(input, maxLength = 100) {
+            const value = input.trim();
+            if (value.length === 0) {
+                return { valid: false, message: 'This field is required' };
+            }
+            if (value.length > maxLength) {
+                return { valid: false, message: `Must be less than ${maxLength} characters` };
+            }
+            return { valid: true };
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Tatler Estate Agents homepage loaded');
+            
+            // Set initial ARIA states
+            mobileMenuBtn.setAttribute('aria-expanded', 'false');
+            
+            // Add focus management for accessibility
+            document.addEventListener('keydown', function(e) {
+                // Tab navigation improvements could be added here
+                if (e.key === 'Tab') {
+                    document.body.classList.add('keyboard-nav');
+                }
+            });
+            
+            document.addEventListener('mousedown', function() {
+                document.body.classList.remove('keyboard-nav');
+            });
+        });
+    </script>
+</body>
+</html>
