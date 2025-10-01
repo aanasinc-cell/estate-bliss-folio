@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recherche de Propriétés | Trouvez votre propriété idéale</title>
+  <meta name="description" content="Recherchez des propriétés à louer. Trouvez votre maison parfaite parmi nos 175 résultats.">
+  
+  <style>
+    /*
+    === COLOR PALETTE ===
+    Green (header/footer/CTAs): #399944
+    Dark gray (price badge): #2f3336
+    Light card background: #f6f6f6
+    White: #ffffff
+    Muted text: #666a6d
+    Accent shadow: rgba(0,0,0,0.06)
+    
+    === INSTRUCTIONS ===
+    - Change logo: Replace "Logo" text in header with <img> tag
+    - Swap images: Update src attributes in .property-card img tags
+    - Modify colors: Edit CSS variables in :root below
+    */
+    
+    :root {
+      --color-primary: #399944;
+      --color-dark: #2f3336;
+      --color-light-bg: #f6f6f6;
+      --color-white: #ffffff;
+      --color-muted: #666a6d;
+      --color-border: rgba(0, 0, 0, 0.06);
+      --shadow-subtle: 0 2px 8px rgba(0, 0, 0, 0.08);
+      --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.15);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--color-dark);
+      background-color: var(--color-white);
+    }
+    
+    /* === HEADER === */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: var(--color-primary);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--color-white);
+      text-decoration: none;
+    }
+    
+    nav ul {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    
+    nav a {
+      color: var(--color-white);
+      text-decoration: none;
+      font-weight: 500;
+      transition: opacity 0.2s;
+    }
+    
+    nav a:hover {
+      opacity: 0.85;
+    }
+    
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+    
+    .hamburger svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--color-white);
+    }
+    
+    /* Mobile menu */
+    .mobile-menu {
+      display: none;
+      background-color: var(--color-primary);
+      padding: 1rem 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .mobile-menu.active {
+      display: block;
+      animation: slideDown 0.3s ease-out;
+    }
+    
+    .mobile-menu ul {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* === FILTER TOOLBAR === */
+    .filter-section {
+      background-color: var(--color-light-bg);
+      padding: 1.5rem 1rem;
+    }
+    
+    .filter-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background-color: var(--color-white);
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      box-shadow: var(--shadow-subtle);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    
+    .search-input-wrapper {
+      position: relative;
+      flex: 1;
+      min-width: 200px;
+    }
+    
+    .search-input-wrapper svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      stroke: var(--color-muted);
+    }
+    
+    .search-input {
+      width: 100%;
+      padding: 0.75rem 0.75rem 0.75rem 2.5rem;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      transition: border-color 0.2s;
+    }
+    
+    .search-input:focus {
+      outline: none;
+      border-color: var(--color-primary);
+    }
+    
+    .filter-select {
+      padding: 0.75rem 2rem 0.75rem 1rem;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      background-color: var(--color-white);
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666a6d' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      min-width: 120px;
+    }
+    
+    .filter-select:focus {
+      outline: none;
+      border-color: var(--color-primary);
+    }
+    
+    .results-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      background-color: var(--color-light-bg);
+      border-radius: 24px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    
+    .results-badge svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--color-primary);
+    }
+    
+    /* === MAIN CONTENT === */
+    main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+    
+    .properties-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    
+    /* === PROPERTY CARD === */
+    .property-card {
+      background-color: var(--color-white);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    
+    .property-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+    
+    .property-image-wrapper {
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+    }
+    
+    .property-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .property-card:hover .property-image {
+      transform: scale(1.08);
+    }
+    
+    .price-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background-color: var(--color-dark);
+      color: var(--color-white);
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+    
+    .property-card:hover .price-badge {
+      transform: translateY(-2px);
+    }
+    
+    .favorite-icon {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 36px;
+      height: 36px;
+      background-color: var(--color-white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+    }
+    
+    .favorite-icon:hover {
+      transform: scale(1.1);
+    }
+    
+    .favorite-icon.saved {
+      background-color: var(--color-primary);
+    }
+    
+    .favorite-icon svg {
+      width: 18px;
+      height: 18px;
+      fill: var(--color-dark);
+    }
+    
+    .favorite-icon.saved svg {
+      fill: var(--color-white);
+    }
+    
+    .property-details {
+      padding: 1rem;
+    }
+    
+    .property-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+    }
+    
+    .property-info {
+      flex: 1;
+    }
+    
+    .property-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-dark);
+      margin-bottom: 0.25rem;
+    }
+    
+    .property-location {
+      font-size: 0.85rem;
+      color: var(--color-muted);
+    }
+    
+    .property-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      text-align: center;
+    }
+    
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.5rem;
+      background-color: var(--color-light-bg);
+      border-radius: 6px;
+      font-size: 0.8rem;
+    }
+    
+    .stat-number {
+      font-weight: 700;
+      color: var(--color-dark);
+      font-size: 1rem;
+    }
+    
+    .stat-label {
+      color: var(--color-muted);
+      font-size: 0.75rem;
+    }
+    
+    /* === VALUATION CTA BANNER === */
+    .valuation-banner {
+      background: linear-gradient(135deg, var(--color-light-bg) 0%, #e8e8e8 100%);
+      padding: 3rem 2rem;
+      margin: 4rem 0;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+    
+    .phone-mockup {
+      flex: 0 0 250px;
+      max-width: 250px;
+    }
+    
+    .phone-mockup img {
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.2));
+    }
+    
+    .valuation-content {
+      flex: 1;
+      min-width: 300px;
+    }
+    
+    .valuation-content h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+      font-family: Georgia, 'Times New Roman', serif;
+    }
+    
+    .cta-button {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background-color: #b8ff5e;
+      color: var(--color-dark);
+      font-weight: 700;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    
+    .cta-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(184, 255, 94, 0.4);
+    }
+    
+    /* === FOOTER === */
+    footer {
+      background-color: var(--color-primary);
+      color: var(--color-white);
+      padding: 3rem 1.5rem 1.5rem;
+    }
+    
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    .footer-column h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .footer-column ul {
+      list-style: none;
+    }
+    
+    .footer-column li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .footer-column a {
+      color: var(--color-white);
+      text-decoration: none;
+      opacity: 0.9;
+      transition: opacity 0.2s;
+      font-size: 0.95rem;
+    }
+    
+    .footer-column a:hover {
+      opacity: 1;
+    }
+    
+    .footer-about {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+    
+    .footer-about p {
+      margin-bottom: 1rem;
+    }
+    
+    .contact-info {
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+    
+    .social-icons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    
+    .social-icons a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      transition: var(--transition);
+    }
+    
+    .social-icons a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+    
+    .social-icons svg {
+      width: 18px;
+      height: 18px;
+      fill: var(--color-white);
+    }
+    
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.85rem;
+      opacity: 0.8;
+    }
+    
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    
+    /* === SCROLL TO TOP === */
+    .scroll-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 48px;
+      height: 48px;
+      background-color: var(--color-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+      border: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      z-index: 50;
+    }
+    
+    .scroll-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .scroll-to-top:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    }
+    
+    .scroll-to-top svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--color-white);
+    }
+    
+    /* === RESPONSIVE === */
+    @media (max-width: 900px) {
+      .properties-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+      
+      .valuation-content h2 {
+        font-size: 2rem;
+      }
+    }
+    
+    @media (max-width: 640px) {
+      nav {
+        display: none;
+      }
+      
+      .hamburger {
+        display: block;
+      }
+      
+      .properties-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .filter-container {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .search-input-wrapper,
+      .filter-select {
+        width: 100%;
+        min-width: unset;
+      }
+      
+      .results-badge {
+        justify-content: center;
+      }
+      
+      .valuation-banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem 1rem;
+      }
+      
+      .phone-mockup {
+        flex: 0 0 180px;
+        max-width: 180px;
+      }
+      
+      .valuation-content h2 {
+        font-size: 1.75rem;
+      }
+      
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+    
+    /* === ACCESSIBILITY === */
+    *:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+    
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <a href="#" class="logo">Logo</a>
+      
+      <nav aria-label="Navigation principale">
+        <ul>
+          <li><a href="#about">À propos</a></li>
+          <li><a href="#properties">Propriétés</a></li>
+          <li><a href="#sell">Vendre</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      
+      <button class="hamburger" aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    
+    <div id="mobile-menu" class="mobile-menu">
+      <nav aria-label="Navigation mobile">
+        <ul>
+          <li><a href="#about">À propos</a></li>
+          <li><a href="#properties">Propriétés</a></li>
+          <li><a href="#sell">Vendre</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  
+  <!-- Filter Section -->
+  <section class="filter-section">
+    <form class="filter-container" id="search-form" role="search">
+      <div class="search-input-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+        <input 
+          type="search" 
+          class="search-input" 
+          placeholder="Recherche" 
+          id="search-input"
+          aria-label="Rechercher des propriétés"
+        >
+      </div>
+      
+      <select class="filter-select" id="category-select" aria-label="Filtrer par catégorie">
+        <option value="">Catégorie</option>
+        <option value="maison">Maison</option>
+        <option value="appartement">Appartement</option>
+        <option value="studio">Studio</option>
+      </select>
+      
+      <select class="filter-select" id="payment-select" aria-label="Filtrer par type de paiement">
+        <option value="">Payer</option>
+        <option value="mensuel">Par mois</option>
+        <option value="hebdomadaire">Par semaine</option>
+      </select>
+      
+      <select class="filter-select" id="city-select" aria-label="Filtrer par ville">
+        <option value="">Ville</option>
+        <option value="loughborough">Loughborough</option>
+        <option value="long-whatton">Long Whatton</option>
+        <option value="rempstone">Rempstone</option>
+        <option value="melton-mowbray">Melton Mowbray</option>
+        <option value="kegworth">Kegworth</option>
+      </select>
+      
+      <select class="filter-select" id="price-select" aria-label="Filtrer par prix">
+        <option value="">Prix</option>
+        <option value="0-500">Jusqu'à 500£</option>
+        <option value="500-1000">500£ - 1000£</option>
+        <option value="1000-1500">1000£ - 1500£</option>
+        <option value="1500+">1500£+</option>
+      </select>
+      
+      <div class="results-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+        </svg>
+        <span id="results-count">175 résultats</span>
+      </div>
+    </form>
+  </section>
+  
+  <!-- Main Content -->
+  <main id="properties">
+    <div class="properties-grid" id="properties-grid">
+      <!-- Property cards will be generated by JavaScript -->
+    </div>
+    
+    <!-- Valuation Banner -->
+    <section class="valuation-banner">
+      <div class="phone-mockup">
+        <svg viewBox="0 0 250 500" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="10" width="230" height="480" rx="30" fill="#1a1a1a"/>
+          <rect x="20" y="40" width="210" height="420" rx="10" fill="#2a2a2a"/>
+          <rect x="30" y="60" width="190" height="60" rx="8" fill="#399944"/>
+          <text x="125" y="95" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">Arrange a valuation</text>
+          <rect x="30" y="140" width="190" height="40" rx="6" fill="#3a3a3a"/>
+          <rect x="30" y="190" width="190" height="40" rx="6" fill="#3a3a3a"/>
+          <rect x="30" y="240" width="190" height="40" rx="6" fill="#3a3a3a"/>
+          <rect x="30" y="290" width="190" height="40" rx="6" fill="#3a3a3a"/>
+        </svg>
+      </div>
+      <div class="valuation-content">
+        <h2>Découvrez la valeur de votre propriété</h2>
+        <button class="cta-button">Organiser une évaluation</button>
+      </div>
+    </section>
+  </main>
+  
+  <!-- Footer -->
+  <footer id="contact">
+    <div class="footer-content">
+      <div class="footer-grid">
+        <div class="footer-column">
+          <div class="footer-about">
+            <p><strong>Notre bureau</strong></p>
+            <div class="contact-info">
+              5, rue colinita,<br>
+              Hay RIAD<br>
+              RABAT
+            </div>
+            <p style="margin-top: 1rem;">012302 320 320<br>Contact@dsv.net</p>
+          </div>
+          <div class="social-icons">
+            <a href="#" aria-label="Facebook">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+              </svg>
+            </a>
+            <a href="#" aria-label="Instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+              </svg>
+            </a>
+            <a href="#" aria-label="TikTok">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/>
+              </svg>
+            </a>
+            <a href="#" aria-label="YouTube">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/>
+                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/>
+              </svg>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                <rect x="2" y="9" width="4" height="12"/>
+                <circle cx="4" cy="4" r="2"/>
+              </svg>
+            </a>
+            <a href="#" aria-label="Twitter">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M4 4l9.68 13L4 20h2.48L15.34 14.46 19.5 20H22l-7.13-9.54L22 4h-2.48l-5.34 6.46L10.5 4H4z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+        
+        <div class="footer-column">
+          <h3>LOUER</h3>
+          <ul>
+            <li><a href="#">Propriétés à vendre</a></li>
+            <li><a href="#">Organiser une visite</a></li>
+            <li><a href="#">Postulez en ligne</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-column">
+          <h3>PROPRIÉTAIRES</h3>
+          <ul>
+            <li><a href="#">Services de location</a></li>
+            <li><a href="#">Organiser une évaluation</a></li>
+            <li><a href="#">Conseils DSV</a></li>
+            <li><a href="#">Calculateur de rendement</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-column">
+          <h3>DOMAINES</h3>
+          <ul>
+            <li><a href="#">Wymeswold</a></li>
+            <li><a href="#">Loughborough</a></li>
+            <li><a href="#">Sileby</a></li>
+            <li><a href="#">Rothley</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-column">
+          <h3>RESSOURCES</h3>
+          <ul>
+            <li><a href="#">Articles</a></li>
+            <li><a href="#">Questions fréquemment posées</a></li>
+            <li><a href="#">Dossier de presse</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <div class="footer-links">
+          <a href="#">politique de confidentialité</a>
+          <a href="#">Cookies</a>
+          <a href="#">DSV Immobilier</a>
+        </div>
+        <div>© 2025 DSV Immobilier</div>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- Scroll to Top Button -->
+  <button class="scroll-to-top" id="scroll-to-top" aria-label="Retour en haut">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+  
+  <script>
+    // Property data
+    const properties = [
+      {
+        image: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=400&h=300&fit=crop',
+        price: '1 900 £ par mois',
+        name: 'Wygall Lane',
+        location: 'Rempstone',
+        beds: 4,
+        baths: 2
+      },
+      {
+        image: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=400&h=300&fit=crop',
+        price: '1 560 £ par mois',
+        name: 'Le Vert',
+        location: 'Long Whatton',
+        beds: 4,
+        baths: 2
+      },
+      {
+        image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&h=300&fit=crop',
+        price: '1 350 £ par mois',
+        name: 'Le Moulin',
+        location: 'Loughborough',
+        beds: 2,
+        baths: 2
+      },
+      {
+        image: 'https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=400&h=300&fit=crop',
+        price: '1 300 £ par mois',
+        name: 'Rue Cobden',
+        location: 'Loughborough',
+        beds: 5,
+        baths: 2
+      },
+      {
+        image: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=400&h=300&fit=crop',
+        price: '1 250 £ par mois',
+        name: 'Les Osiers',
+        location: 'Loughborough',
+        beds: 3,
+        baths: 1
+      },
+      {
+        image: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=400&h=300&fit=crop',
+        price: '1 200 £ par mois',
+        name: 'Jardins des Paons',
+        location: 'Leake Est',
+        beds: 3,
+        baths: 2
+      },
+      {
+        image: 'https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=400&h=300&fit=crop',
+        price: '1 200 £ par mois',
+        name: "Route de l'Ermitage",
+        location: 'Loughborough',
+        beds: 3,
+        baths: 1
+      },
+      {
+        image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&h=300&fit=crop',
+        price: '1 100 £ par mois',
+        name: 'Roberts Close',
+        location: 'Kegworth',
+        beds: 3,
+        baths: 1
+      },
+      {
+        image: 'https://images.unsplash.com/photo-1554995207-c18c203602cb?w=400&h=300&fit=crop',
+        price: '1 050 £ par mois',
+        name: 'Route de Schofield',
+        location: 'Loughborough',
+        beds: 3,
+        baths: 1
+      },
+      {
+        image: 'https://images.unsplash.com/photo-1558036117-15d82a90b9b1?w=400&h=300&fit=crop',
+        price: '940 £ par mois',
+        name: 'Chemin Aitken',
+        location: 'Loughborough',
+        beds: 2,
+        baths: 1
+      },
+      {
+        image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400&h=300&fit=crop',
+        price: '940 £ par mois',
+        name: 'Hippodrome Mews',
+        location: 'Loughborough',
+        beds: 2,
+        baths: 2
+      },
+      {
+        image: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=400&h=300&fit=crop',
+        price: '940 £ par mois',
+        name: 'Hippodrome Mews',
+        location: 'Loughborough',
+        beds: 2,
+        baths: 2
+      },
+      {
+        image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&h=300&fit=crop',
+        price: '900 £ par mois',
+        name: 'Harlech Close',
+        location: 'Loughborough',
+        beds: 3,
+        baths: 1
+      },
+      {
+        image: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=400&h=300&fit=crop',
+        price: '825 £ par mois',
+        name: 'Langdale Grange',
+        location: 'Melton Mowbray',
+        beds: 1,
+        baths: 1
+      },
+      {
+        image: 'https://images.unsplash.com/photo-1600573472591-ee6c7fcb3742?w=400&h=300&fit=crop',
+        price: '130 £ par personne et par semaine',
+        name: "Route d'Alan Moss",
+        location: 'Loughborough',
+        beds: 4,
+        baths: 1
+      },
+      {
+        image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400&h=300&fit=crop',
+        price: '85 £ par personne et par semaine',
+        name: "Nouvelle route d'Ashby",
+        location: 'Loughborough',
+        beds: 4,
+        baths: 1
+      }
+    ];
+    
+    // Generate property cards
+    function generatePropertyCards() {
+      const grid = document.getElementById('properties-grid');
+      
+      properties.forEach((property, index) => {
+        const card = document.createElement('article');
+        card.className = 'property-card';
+        card.innerHTML = `
+          <div class="property-image-wrapper">
+            <img 
+              src="${property.image}" 
+              alt="Propriété à ${property.location}" 
+              class="property-image"
+              loading="lazy"
+            >
+            <div class="price-badge">${property.price}</div>
+            <button 
+              class="favorite-icon" 
+              aria-label="Ajouter aux favoris"
+              aria-pressed="false"
+              data-index="${index}"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </button>
+          </div>
+          <div class="property-details">
+            <div class="property-header">
+              <div class="property-info">
+                <h3 class="property-name">${property.name}</h3>
+                <p class="property-location">${property.location}</p>
+              </div>
+            </div>
+            <div class="property-stats">
+              <div class="stat-item">
+                <span class="stat-number">${property.beds}</span>
+                <span class="stat-label">lits</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">${property.baths}</span>
+                <span class="stat-label">${property.baths > 1 ? 'thermes' : 'bain'}</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">—</span>
+                <span class="stat-label">m²</span>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        grid.appendChild(card);
+      });
+    }
+    
+    // Mobile menu toggle
+    const hamburger = document.querySelector('.hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    hamburger.addEventListener('click', () => {
+      const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+      hamburger.setAttribute('aria-expanded', !isExpanded);
+      mobileMenu.classList.toggle('active');
+    });
+    
+    // Favorite icons
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('.favorite-icon')) {
+        const button = e.target.closest('.favorite-icon');
+        const isPressed = button.getAttribute('aria-pressed') === 'true';
+        button.setAttribute('aria-pressed', !isPressed);
+        button.classList.toggle('saved');
+      }
+    });
+    
+    // Search form
+    const searchForm = document.getElementById('search-form');
+    searchForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const searchValue = document.getElementById('search-input').value;
+      
+      if (searchValue.trim()) {
+        alert(`Affichage des résultats pour : ${searchValue}`);
+      }
+    });
+    
+    // Scroll to top button
+    const scrollToTopBtn = document.getElementById('scroll-to-top');
+    
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        scrollToTopBtn.classList.add('visible');
+      } else {
+        scrollToTopBtn.classList.remove('visible');
+      }
+    });
+    
+    scrollToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href !== '#' && href !== '') {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        }
+      });
+    });
+    
+    // Initialize
+    generatePropertyCards();
+  </script>
+</body>
+</html>
